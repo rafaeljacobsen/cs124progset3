@@ -12,14 +12,23 @@ def repeatedrandom(A,maxiter):
     return np.abs(np.dot(A,S))
 
 def karmarkarkarp(A):
-    Acopy = A.copy()
+    arr = np.array(A, dtype=np.int64)
+    n = len(arr)
+    
     while True:
-        idx = np.argpartition(Acopy, -2)[-2:]
-        a, b = Acopy[idx]
-        if b == 0:
-            return a
-        diff = a - b
-        Acopy[idx] = [0, diff]
+        m1 = np.argmax(arr)
+        max_val = arr[m1]
+        arr[m1] = -1
+        m2 = np.argmax(arr)
+        arr[m1] = max_val
+        
+        if arr[m2] == 0:
+            return arr[m1]
+            
+        diff = arr[m1] - arr[m2]
+        arr[m1] = diff
+        arr[m2] = 0
+
 
 def hillclimbing(A,maxiter):
     S=np.random.choice([-1,1],100)
