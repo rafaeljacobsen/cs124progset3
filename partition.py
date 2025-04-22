@@ -11,17 +11,15 @@ def repeatedrandom(A,maxiter):
             residue=residuep
     return np.abs(np.dot(A,S))
 
-
 def karmarkarkarp(A):
-    Acopy = np.array(A, dtype=np.int64)
+    Acopy = A.copy()
     while True:
-        part = np.partition(Acopy, -2)
-        if part[-2] == 0:
-            return part[-1]
-        diff = part[-1] - part[-2]
         idx = np.argpartition(Acopy, -2)[-2:]
-        Acopy[idx[0]] = 0
-        Acopy[idx[1]] = diff
+        a, b = Acopy[idx]
+        if b == 0:
+            return a
+        diff = a - b
+        Acopy[idx] = [0, diff]
 
 def hillclimbing(A,maxiter):
     S=np.random.choice([-1,1],100)
