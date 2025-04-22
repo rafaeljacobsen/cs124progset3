@@ -171,16 +171,12 @@ def partition(flag, algorithm, inputfile):
         return(int(hillclimbing(A,25000)))
     if algorithm == 3:
         return(int(simulatedannealing(A,25000)))
-    P=np.random.randint(n,size=n)
-    Ap=np.zeros(n)
-    for j in range(n):
-        Ap[P[j]]=Ap[P[j]]+A[j]
     if algorithm == 11:
-        return(int(repeatedrandomprepartition(Ap,25000)))
+        return(int(repeatedrandomprepartition(A,25000)))
     if algorithm == 12:
-        return(int(hillclimbingprepartition(Ap,25000)))
+        return(int(hillclimbingprepartition(A,25000)))
     if algorithm == 13:
-        return(int(simulatedannealingprepartition(Ap,25000)))
+        return(int(simulatedannealingprepartition(A,25000)))
 
 import sys
 args = sys.argv
