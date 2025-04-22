@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def repeatedrandom(A,maxiter):
     S=np.random.choice([-1,1],100)
     residue=np.abs(np.dot(A,S))
@@ -76,79 +77,6 @@ def simulatedannealing(A,maxiter):
             residuepp=np.abs(np.dot(A,Spp))
     return(np.abs(np.dot(A,Spp)))
 
-#too slow
-def transform(P,A):
-    n=len(A)
-    Ap=np.zeros(n)
-    for j in range(n):
-        Ap[P[j]]=Ap[P[j]]+A[j]
-    return(int(karmarkarkarp(Ap)))
-
-def repeatedrandomprepartition(A,maxiter):
-    n=len(A)
-    P=np.random.randint(n,size=n)
-    residue=transform(P,A)
-
-    for _ in range(maxiter):
-        Pp=np.random.randint(n,size=n)
-        residuep=transform(P,A)
-        if residuep<residue:
-            P=Pp
-            residue=residuep
-    return residue
-
-def getPneighbor(P,A,n):
-    i=np.random.choice(np.arange(n),1)
-    while True:
-        j=np.random.choice(np.arange(n),1)
-        if P[i] != j:
-            break
-    
-    Pp=np.copy(P)
-    Pp[i]=j
-    residuep=transform(Pp,A)
-    return Pp,residuep
-
-def hillclimbingprepartition(A,maxiter):
-    n=len(A)
-    P=np.random.randint(n,size=n)
-    residue=transform(P,A)
-    for _ in range(maxiter):
-        Pp,residuep=getPneighbor(P,A,n)
-        if residuep<residue:
-            P=Pp
-            residue=residuep
-    return residue
-
-def simulatedannealingprepartition(A,maxiter):
-    n=len(A)
-    P=np.random.randint(n,size=n)
-    residue=transform(P,A)
-    Ppp=np.copy(P)
-    residuepp=transform(Ppp,A)
-    
-    neighbortime=0
-    
-    for ite in range(maxiter):
-        #generate random neighbor P
-        Pp,residuep=getPneighbor(P,A,n)
-        
-        #if residue is smaller then S=Sp
-        if residuep<residue:
-            P=Pp
-            residue=residuep
-        #otherwise
-        else:
-            #generate probability
-            probability=np.exp(-(residuep-residue)/T(ite))
-            #if probability, set S=S'
-            if np.random.uniform() < probability:
-                P=Pp
-                residue=residuep
-        if residue < residuepp:
-            Ppp=P
-            residuepp=transform(Ppp,A)
-    return(residuepp)
 def partition(flag, algorithm, inputfile):
     maxiter=25000
     f = open(inputfile, "r")
@@ -168,11 +96,11 @@ def partition(flag, algorithm, inputfile):
     for j in range(n):
         Ap[P[j]]=Ap[P[j]]+A[j]
     if algorithm == 11:
-        return(int(repeatedrandomprepartition(Ap,25000)))
+        return(int(repeatedrandom(Ap,25000)))
     if algorithm == 12:
-        return(int(hillclimbingprepartition(Ap,25000)))
+        return(int(hillclimbing(Ap,25000)))
     if algorithm == 13:
-        return(int(simulatedannealingprepartition(Ap,25000)))
+        return(int(simulatedannealing(Ap,25000)))
 
 import sys
 args = sys.argv
