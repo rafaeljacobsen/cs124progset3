@@ -99,7 +99,7 @@ def repeatedrandomprepartition(A,maxiter):
 
     for _ in range(maxiter):
         Pp=np.random.randint(n,size=n)
-        residuep=transform(P,A)
+        residuep=transform(Pp,A)
         if residuep<residue:
             P=Pp
             residue=residuep
