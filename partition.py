@@ -181,4 +181,3 @@ def partition(flag, algorithm, inputfile):
 import sys
 args = sys.argv
 print(partition(int(args[1]),int(args[2]),str(args[3])))
-
