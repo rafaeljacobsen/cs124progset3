@@ -13,14 +13,15 @@ def repeatedrandom(A,maxiter):
 
 
 def karmarkarkarp(A):
-    S=np.zeros(100)
-    Acopy=np.copy(A)
-    while np.sum(Acopy) != np.max(Acopy):
-        i,j=np.argpartition(Acopy,2)[-2:]
-        Acopy[j]=Acopy[j]-Acopy[i]
-        Acopy[i]=0
-    return(np.sum(Acopy))
-
+    Acopy = np.array(A, dtype=np.int64)
+    while True:
+        part = np.partition(Acopy, -2)
+        if part[-2] == 0:
+            return part[-1]
+        diff = part[-1] - part[-2]
+        idx = np.argpartition(Acopy, -2)[-2:]
+        Acopy[idx[0]] = 0
+        Acopy[idx[1]] = diff
 
 def hillclimbing(A,maxiter):
     S=np.random.choice([-1,1],100)
